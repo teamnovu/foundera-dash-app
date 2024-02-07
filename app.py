@@ -29,7 +29,7 @@ app.layout = html.Div([
     html.H3("Date range"),
     dcc.DatePickerRange(
         id='date-range-picker',
-        start_date='2018-01-01',
+        start_date='2021-01-01',
         end_date='2024-12-31',
         min_date_allowed='2018-01-01',
         max_date_allowed='2024-12-31',
