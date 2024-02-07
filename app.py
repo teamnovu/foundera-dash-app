@@ -22,7 +22,7 @@ app.layout = html.Div([
     dcc.Dropdown(
         id='canton-selector',
         options=[{'label': i, 'value': i} for i in df.canton.drop_duplicates().sort_values()],
-        value=['ZH', 'VD'],  # Default value
+        value=['CH'],  # Default value
         multi=True,
     ),
     
