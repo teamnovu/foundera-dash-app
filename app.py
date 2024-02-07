@@ -64,6 +64,7 @@ app.layout = html.Div([
         value='raw data',  # Default value
         style={'max-width': '500px'}
     ),
+    dcc.RadioItems(id='trendline', options=['Show trendline', 'No trendline'], value='No trendline', inline=True),
     
     dcc.Graph(id='line-graph')
 ])
@@ -76,9 +77,10 @@ app.layout = html.Div([
      Input('date-range-picker', 'end_date'),
      Input('window-size-slider', 'value'),
      Input('frequency-selector', 'value'),
-    Input('normalization-selector', 'value')]
+    Input('normalization-selector', 'value'),
+    Input('trendline', 'value')]
 )
-def update_graph(selected_cantons, start_date, end_date, window_size, by, normalized):
+def update_graph(selected_cantons, start_date, end_date, window_size, by, normalized, trendline):
     # Filter data based on selections
     filtered_df = df[df['canton'].isin(selected_cantons) & 
                      (df['date'] >= start_date) & 
@@ -108,8 +110,13 @@ def update_graph(selected_cantons, start_date, end_date, window_size, by, normal
     title = f'New foundings per {by}'
     if window_size > 1:
         title += f" ({window_size} {by} rolling average)"
+        
+    trendline = 'ols' if trendline == 'Show trendline' else None
     
-    fig = px.line(data, x="date", y=display_ycol, title=title, color='canton', labels={display_ycol: y_label})
+    #fig = px.line(data, x="date", y=display_ycol, title=title, color='canton', labels={display_ycol: y_label})
+    fig = px.scatter(data, x="date", y=display_ycol, title=title, color='canton',
+             labels={display_ycol: y_label}, trendline=trendline)
+    fig.update_traces(mode = 'lines')
     return fig
 
 # Run the app
