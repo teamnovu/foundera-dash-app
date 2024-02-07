@@ -8,9 +8,8 @@ import numpy as np
 import pathlib
 
 
-PATH = pathlib.Path(__file__).parent.parent
-DATA_PATH = PATH.joinpath("data").resolve()
-df = pd.read_pickle(DATA_PATH.joinpath("grouped_by_canton.pkl"))
+PATH = pathlib.Path(__file__).parent
+df = pd.read_pickle(PATH.joinpath("grouped_by_canton.pkl"))
 
 # Initialize the Dash app
 app = dash.Dash(__name__)
